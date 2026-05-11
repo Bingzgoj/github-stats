@@ -6,6 +6,12 @@ It produces two badges:
 - `generated/overview.svg` — stars, forks, contributions, lines changed, views, repositories
 - `generated/languages.svg` — language usage distribution with GitHub language colors
 
+<p align="center">
+  <img src="https://github.com/Bingzgoj/github-stats/blob/output/generated/overview.svg" alt="">
+  <img src="https://github.com/Bingzgoj/github-stats/blob/output/generated/languages.svg" alt="">
+</p>
+
+
 ## Features
 
 - Built in C (`libcurl` + `cJSON`) for fast execution and low overhead
@@ -86,9 +92,7 @@ Generated files are written into `generated/`.
 ├── src/                # C source files
 ├── templates/          # SVG templates
 ├── generated/          # output SVG files
-├── Makefile
-├── github_stats.py     # Python reference implementation
-└── generate_images.py  # Python SVG generation reference
+└── Makefile  # Python SVG generation reference
 ```
 
 ## Notes
