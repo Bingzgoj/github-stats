@@ -11,6 +11,7 @@
 
 #define TEMPLATE_OVERVIEW "templates/overview.svg"
 #define TEMPLATE_LANGUAGES "templates/languages.svg"
+#define DEFAULT_LANGUAGE_COLOR "#8B949E"
 
 typedef struct {
     char *data;
@@ -240,7 +241,11 @@ static int write_languages(const GitStats *s)
 
     size_t n = s->lang_count;
     for (size_t i = 0; i < n; ++i) {
-        const char *color = (s->langs[i].color[0] ? s->langs[i].color : "#000000");
+        const char *raw_color = s->langs[i].color;
+        const char *color =
+                (raw_color[0] != '\0' && strcmp(raw_color, "null") != 0)
+                        ? raw_color
+                        : DEFAULT_LANGUAGE_COLOR;
         if (sb_appendf(&progress,
                        "<span style='width: %.4f%%; background-color: %s'></span>",
                        s->langs[i].percent,
@@ -253,8 +258,9 @@ static int write_languages(const GitStats *s)
             return -1;
         }
 
+
         if (sb_appendf(&list,
-                       "<li style='animation-delay: %zums'><svg class='octicon' width='10' height='10' viewBox='0 0 16 16'><path d='M8 1a7 7 0 100 14A7 7 0 008 1z' fill='%s'/></svg><span class='lang'>%s</span><span class='percent'>%.2f%%</span></li>",
+                       "<li style='animation-delay: %zums'><span class='dot' style='color: %s'>•</span><span class='lang'>%s</span><span class='percent'>%.2f%%</span></li>",
                        i * 120,
                        color,
                        s->langs[i].name,

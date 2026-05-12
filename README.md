@@ -72,7 +72,7 @@ export GITHUB_ACTOR="<your_username>"
 export EXCLUDED="owner/private-*,owner/archive/*"
 export EXCLUDED_LANGS="HTML,CSS,JSON,YAML"
 
-./git-stat
+./github-stats
 ```
 
 Expected stdout:
@@ -83,6 +83,16 @@ generated/languages.svg
 ```
 
 Generated files are written into `generated/`.
+
+## Local cache mode
+
+- `./github-stats`:
+  - fetches fresh data from GitHub
+  - generates SVG files
+  - saves a local cache to `generated/stats_cache.bin`
+- `./github-stats -g`:
+  - skips GitHub API calls
+  - regenerates SVG files from `generated/stats_cache.bin`
 
 ## Project Structure
 
