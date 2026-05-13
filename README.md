@@ -70,7 +70,7 @@ export ACCESS_TOKEN="<your_token>"
 export GITHUB_ACTOR="<your_username>"
 # optional
 export EXCLUDED="owner/private-*,owner/archive/*"
-export EXCLUDED_LANGS="HTML,CSS,JSON,YAML"
+export EXCLUDED_LANGS="HTML,CSS,JSON,YAML,SCSS"
 
 ./github-stats
 ```
@@ -102,7 +102,7 @@ Generated files are written into `generated/`.
 ├── src/                # C source files
 ├── templates/          # SVG templates
 ├── generated/          # output SVG files
-└── Makefile  # Python SVG generation reference
+└── Makefile
 ```
 
 ## Notes
