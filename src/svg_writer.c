@@ -261,7 +261,7 @@ static int write_languages(const GitStats *s)
 
         if (sb_appendf(&list,
                        "<li style='animation-delay: %zums'><span class='dot' style='color: %s'>•</span><span class='lang'>%s</span><span class='percent'>%.2f%%</span></li>",
-                       i * 120,
+                       (i % 6) * 120,
                        color,
                        s->langs[i].name,
                        s->langs[i].percent)
