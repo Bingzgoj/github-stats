@@ -64,7 +64,6 @@ int main(int argc, char **argv)
              stats.forks,
              stats.lang_count);
 
-    printf("generated/overview.svg\n");
-    printf("generated/languages.svg\n");
+    log_info("Successfully generated file: generated/overview.svg and generated/languages.svg\n");
     return 0;
 }
