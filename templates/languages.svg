@@ -93,6 +93,10 @@ div.ellipsis {
   margin-bottom: 1em;
 }
 
+.progress span + span {
+  box-shadow: inset 1px 0 rgba(255, 255, 255, 0.55);
+}
+
 .lang {
   font-weight: 600;
   margin-right: 4px;

@@ -224,9 +224,15 @@ static void hydrate_language_colors_from_graphql(const char *token, int count_fo
 
     log_info("hydrated language colors from GraphQL");
 }
-static long long fetch_total_contributions(const char *token)
+static long long fetch_total_contributions(const char *user, const char *token)
 {
-    char *years_json = github_graphql(token, "query { viewer { contributionsCollection { contributionYears } } }");
+    char years_query[512];
+    snprintf(years_query,
+             sizeof(years_query),
+             "query { user(login: \"%s\") { contributionsCollection { contributionYears } } }",
+             user);
+
+    char *years_json = github_graphql(token, years_query);
     if (!years_json) return 0;
 
     cJSON *root = cJSON_Parse(years_json);
@@ -236,7 +242,7 @@ static long long fetch_total_contributions(const char *token)
     cJSON *years = cJSON_GetObjectItemCaseSensitive(
         cJSON_GetObjectItemCaseSensitive(
             cJSON_GetObjectItemCaseSensitive(
-                cJSON_GetObjectItemCaseSensitive(root, "data"), "viewer"),
+                cJSON_GetObjectItemCaseSensitive(root, "data"), "user"),
             "contributionsCollection"),
         "contributionYears");
 
@@ -250,7 +256,8 @@ static long long fetch_total_contributions(const char *token)
             char q[512];
             snprintf(q,
                      sizeof(q),
-                     "query { viewer { contributionsCollection(from: \\\"%d-01-01T00:00:00Z\\\", to: \\\"%d-01-01T00:00:00Z\\\") { contributionCalendar { totalContributions } } } }",
+                     "query { user(login: \"%s\") { contributionsCollection(from: \"%d-01-01T00:00:00Z\", to: \"%d-01-01T00:00:00Z\") { contributionCalendar { totalContributions } } } }",
+                     user,
                      year,
                      year + 1);
             char *year_json = github_graphql(token, q);
@@ -262,7 +269,7 @@ static long long fetch_total_contributions(const char *token)
                 cJSON_GetObjectItemCaseSensitive(
                     cJSON_GetObjectItemCaseSensitive(
                         cJSON_GetObjectItemCaseSensitive(
-                            cJSON_GetObjectItemCaseSensitive(yr, "data"), "viewer"),
+                            cJSON_GetObjectItemCaseSensitive(yr, "data"), "user"),
                         "contributionsCollection"),
                     "contributionCalendar"),
                 "totalContributions");
@@ -448,7 +455,7 @@ int build_stats(const char *user, const char *token, int count_forks, GitStats *
 
     out->repos = (long long)all_count;
     hydrate_language_colors_from_graphql(token, count_forks, &exclude_repos, out);
-    out->total_contributions = fetch_total_contributions(token);
+    out->total_contributions = fetch_total_contributions(user, token);
 
     // Merge Jupyter Notebook into Python to match python behavior.
     size_t py_i = (size_t)-1, nb_i = (size_t)-1;
