@@ -80,7 +80,7 @@ div.ellipsis {
   transform: scale(2.2);
   transform-origin: center;
   vertical-align: middle;
-  margin: 0 0.5ch;
+  margin: 0 0.8ch 0 0.2ch;
 }
 
 .progress {
