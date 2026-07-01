@@ -77,10 +77,9 @@ div.ellipsis {
 
 .dot {
   display: inline-block;
-  transform: scale(2.2);
+  transform: scale(2.6);
   transform-origin: center;
-  vertical-align: middle;
-  margin: 0 0.8ch 0 0.2ch;
+  margin: 0 0.8ch 0 0.5ch;
 }
 
 .progress {
