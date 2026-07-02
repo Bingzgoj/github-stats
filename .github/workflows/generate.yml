@@ -1,6 +1,16 @@
 name: Generate GitHub Stats SVG
 
 on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - generated/**
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - generated/**
   schedule:
     # GitHub Actions uses UTC. 22:00 UTC = 06:00 (UTC+8) next day.
     - cron: "0 22 * * *"
